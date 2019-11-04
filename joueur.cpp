@@ -1,25 +1,34 @@
-#include"position.h"
-#include"joueur.h"
-#include<iostream>
-namespace participant{
+#include "joueur.h"
 
-joueur::joueur(std::string&nom,position*posi,int score,int dureeVie):d_nom{nom},
-d_case{posi},d_score{score},d_dureeVie{dureeVie}
-{
-}
+joueur::joueur()
+{}
 
-participant::position* joueur::positionJoueur()const{
+joueur::joueur(std::string&nom,position pos,int score,int dureeVie):d_nom{nom},d_case{pos},d_score{score},d_dureeVie{dureeVie},d_nbrobotdetruit{0}
+{}
 
-return d_case;
+position joueur::positionJoueur(){
+
+    return d_case;
 }
 
 int joueur::score()const{
-return d_score;
+    return d_score;
 
 }
-void joueur::deplacerJoueur(const position&casee){
-d_case=new position(casee);
+
+void joueur::deplacerJoueur(int numcol, int numligne){
+    d_case.changerPosition(numcol,numligne);
 }
 
+void joueur::sauverJoueur(std::ostream&ost){
+
+    ost<<"("<<d_nom<<","<<d_case<<","<<d_score<<","<<d_dureeVie<<")";
+}
+
+
+std::ostream& operator<<(std::ostream&ost, joueur& j){
+
+    j.sauverJoueur(ost);
+    return ost;
 
 }
