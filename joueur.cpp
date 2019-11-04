@@ -16,7 +16,7 @@ int joueur::score()const{
 
 }
 
-void joueur::deplacerJoueur(int numcol, int numligne){
+void joueur::deplacerVers(int numcol, int numligne){
     d_case.changerPosition(numcol,numligne);
 }
 
@@ -24,7 +24,13 @@ void joueur::sauverJoueur(std::ostream&ost){
 
     ost<<"("<<d_nom<<","<<d_case<<","<<d_score<<","<<d_dureeVie<<")";
 }
+void joueur::LireDepuis(std::istream&ist){
+char c;
+ist>>c>>d_nom>>c;
+d_case.LireDepuis(ist);
+ist>>c>>d_score>>c>>d_dureeVie>>c;
 
+}
 
 std::ostream& operator<<(std::ostream&ost, joueur& j){
 
@@ -32,3 +38,8 @@ std::ostream& operator<<(std::ostream&ost, joueur& j){
     return ost;
 
 }
+std::istream&operator>>(std::istream&ist,joueur&j){
+j.LireDepuis(ist);
+return ist;
+}
+

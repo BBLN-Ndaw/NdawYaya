@@ -12,7 +12,9 @@ public:
     int numLigne()const;
     void changerPosition(int col,int lig);
     void sauverPosition(std::ostream&ost);
+    void LireDepuis(std::istream&ist);
     void afficherPosition();
+    void DeplacerVers(int lig,int col);
 
 private:
     int d_numColonne;
@@ -21,5 +23,5 @@ private:
 };
 
 std::ostream& operator<<(std::ostream&ost, position&p);
-
+std::istream&operator>>(std::istream&ist,position&p);
 #endif // POSITION_H

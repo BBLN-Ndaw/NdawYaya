@@ -13,8 +13,9 @@ public:
     joueur(std::string&nom,position pos,int score,int dureeVie);
     position positionJoueur();
     int score()const;
-    void deplacerJoueur(int numcol, int numligne);
+    void deplacerVers(int numcol, int numligne);
     void sauverJoueur(std::ostream&ost);
+    void LireDepuis(std::istream&ost);
 
 private:
     std::string d_nom;
@@ -26,6 +27,7 @@ private:
 };
 
 std::ostream& operator<<(std::ostream&ost, joueur& j);
+std::istream&operator>>(std::istream&ist,joueur&j);
 //std::istream& operator>>(std::istream&ist, joueur& j);
 
 
@@ -54,4 +56,4 @@ std::ostream& operator<<(std::ostream&ost, joueur& j);
 
 
 
-#endif // JOUEUR_H
+//#endif // JOUEUR_H

@@ -1,10 +1,17 @@
 # depslib dependency file v1.0
-1572475740 source:c:\users\yayan\documents\baye\ndawyaya\joueur.cpp
+1572898586 source:c:\users\yayan\documents\baye\ndawyaya\joueur.cpp
+	"joueur.h"
 
-1572478891 source:c:\users\yayan\documents\baye\ndawyaya\position.cpp
-	<iostream>
+1572898663 source:c:\users\yayan\documents\baye\ndawyaya\position.cpp
 	"position.h"
 
-1572478928 c:\users\yayan\documents\baye\ndawyaya\position.h
+1572898653 c:\users\yayan\documents\baye\ndawyaya\position.h
 	<iostream>
+
+1572896816 source:c:\users\yayan\documents\baye\ndawyaya\main.cpp
+	<iostream>
+
+1572898616 c:\users\yayan\documents\baye\ndawyaya\joueur.h
+	<iostream>
+	"position.h"
 
