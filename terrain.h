@@ -32,7 +32,8 @@ class terrain
      void ChangerJoueur(joueur&j);
      bool terrainOk();
      bool JoueurAPerdu();
-
+      /* pour verifier si la position es t dans le terrain*/
+      bool estDansTerrain(const position&p)const;
      void afficheGrille(); // fonction test
      void afficherPositionJoueur(); //fonction test
 
@@ -43,6 +44,7 @@ class terrain
      int d_nbrobotSecondG;
      int d_nbligne;
      int d_nbcolonne;
+     //garder une reference sur le joueur
 
      std::vector<std::vector<int>> d_grille; // 0 = vide, 1 = joueur, 2 = robot1G, 3 = robot2G, 4 = debris
      std::vector<robot*> d_robot1G;

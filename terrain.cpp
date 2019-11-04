@@ -245,6 +245,10 @@ bool terrain::terrainOk(){
 
 
 }
+ bool terrain::estDansTerrain(cont position&p)const{
+ return((p.numLigne()>=0&&p.numLigne()<=d_nbligne)&&
+        (p.numColonne()>=0&&p.numColonne()<=d_nbcolonne))
+}
 
 bool terrain::JoueurAPerdu(){
 
