@@ -1,21 +1,26 @@
 #include "terrain.h"
 
-terrain::terrain():d_nbdebris{0},d_nbrobotFirstG{0},d_nbrobotSecondG{0},d_nbligne{0},d_nbcolonne{0}
+terrain::terrain():d_nbdebris{0},d_joueur{},d_nbrobotFirstG{0},d_nbrobotSecondG{0},d_nbligne{0},d_nbcolonne{0}
 {}
 
-terrain::terrain(int nbdebris,int nbrobotfirstG, int nbrobotsecondG, int nbligne, int nbcolonne):d_nbdebris{nbdebris},d_nbrobotFirstG{nbrobotfirstG},d_nbrobotSecondG{nbrobotsecondG},d_nbligne{nbligne},d_nbcolonne{nbcolonne}
+terrain::terrain(int nbdebris,int nbrobotfirstG, int nbrobotsecondG, int nbligne, int nbcolonne, joueur&j):d_nbdebris{nbdebris},d_joueur{j},d_nbrobotFirstG{nbrobotfirstG},d_nbrobotSecondG{nbrobotsecondG},d_nbligne{nbligne},d_nbcolonne{nbcolonne}
 {
     if(terrainOk()){
+
+         d_robot1G.resize(static_cast<unsigned>(nbrobotfirstG));
+         d_robot2G.resize(static_cast<unsigned>(nbrobotsecondG));
+
          d_grille.resize(static_cast<unsigned>(d_nbligne), std::vector<int>(static_cast<unsigned>(d_nbcolonne)));
          InitialisationGrille(d_nbdebris,d_nbrobotFirstG,d_nbrobotSecondG);
          sauverTerrain("/Users/Neron/Desktop/premiereSauvegarde.txt");
+
     }
 }
 
 void terrain::sauverTerrain(const std::string&nomFichier){
 
     std::ofstream f (nomFichier, std::ofstream::out);
-    f << d_nbdebris << "," << d_nbrobotFirstG << "," << d_nbrobotSecondG << "," << d_nbligne << "," << d_nbcolonne;
+    f << d_joueur << "," << d_nbdebris << "," << d_nbrobotFirstG << "," << d_nbrobotSecondG << "," << d_nbligne << "," << d_nbcolonne;
     f.close();
 
 }
@@ -41,6 +46,12 @@ int terrain::nbRobot2G()const{
     return d_nbrobotSecondG;
 }
 
+
+
+joueur terrain::Joueur(){
+    return d_joueur;
+}
+
 std::vector<std::vector<int>> terrain::grille()const{
     return d_grille;
 }
@@ -61,6 +72,7 @@ void terrain::changerTailleGrille (int nbligne, int nbcolonne){
 
 
 
+
 }
 
 void terrain::changerNb(int nbdebris,int nbRobot1G,int nbRobot2G){
@@ -68,6 +80,8 @@ void terrain::changerNb(int nbdebris,int nbRobot1G,int nbRobot2G){
     d_nbdebris = nbdebris;
     d_nbrobotFirstG = nbRobot1G;
     d_nbrobotSecondG = nbRobot2G;
+    d_robot1G.resize(static_cast<unsigned>(nbRobot1G));
+    d_robot2G.resize(static_cast<unsigned>(nbRobot2G));
 
 }
 
@@ -95,7 +109,7 @@ void terrain::InitialisationGrille(int nbdebris, int nbRobot1G, int nbRobot2G){
             d_grille[static_cast<unsigned>(i)][static_cast<unsigned>(j)] = nbalea;
 
             if(nbalea==0){++compteurZero;}
-            if(nbalea==1){++compteurJoueur;}
+            if(nbalea==1){d_joueur.deplacerJoueur(j,i);++compteurJoueur;}
             if(nbalea==2){++compteurRobot1G;}
             if(nbalea==3){++compteurRobot2G;}
             if(nbalea==4){++compteurDebris;}
@@ -199,6 +213,27 @@ void terrain::InitialisationGrille(int nbdebris, int nbRobot1G, int nbRobot2G){
 
 }
 
+void terrain::ChangerJoueur(joueur&j){
+    d_joueur=j;
+}
+
+void terrain::changerPosJoueur(int numcol, int numligne){
+
+
+
+         d_grille[static_cast<unsigned>(d_joueur.positionJoueur().numLigne())][static_cast<unsigned>(d_joueur.positionJoueur().numColonne())]=0;
+
+         if(d_grille[static_cast<unsigned>(numligne)][static_cast<unsigned>(numcol)]==4||d_grille[static_cast<unsigned>(numligne)][static_cast<unsigned>(numcol)]==3||d_grille[static_cast<unsigned>(numligne)][static_cast<unsigned>(numcol)]==2){
+              d_grille[static_cast<unsigned>(numligne)][static_cast<unsigned>(numcol)]=5;
+         }else{
+            d_grille[static_cast<unsigned>(numligne)][static_cast<unsigned>(numcol)]=1;
+         }
+
+         d_joueur.deplacerJoueur(numcol,numligne);
+
+
+}
+
 
 bool terrain::terrainOk(){
 
@@ -208,6 +243,16 @@ bool terrain::terrainOk(){
         return false;
     }
 
+
+}
+
+bool terrain::JoueurAPerdu(){
+
+    if(d_grille[d_joueur.positionJoueur().numLigne()][d_joueur.positionJoueur().numColonne()]==5){
+        return true;
+    }else{
+        return false;
+    }
 
 }
 
@@ -232,4 +277,7 @@ void terrain::afficheGrille(){
 
 }
 
- 
+void terrain::afficherPositionJoueur(){
+    std::cout<<d_joueur.positionJoueur().numLigne()<<";"<<d_joueur.positionJoueur().numColonne()<<std::endl;
+}
+
