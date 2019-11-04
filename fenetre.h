@@ -7,6 +7,7 @@
 #include <QObject>
 #include <QPushButton>
 #include <QDialog>
+#include <QPixmap>
 #include "grille.h"
 #include "personnaliserterrain.h"
 
@@ -16,6 +17,7 @@ class fenetre : public QMainWindow
     Q_OBJECT
 public:
     fenetre(terrain&t);
+    void perdu();
 private:
     terrain d_t;
     QMainWindow*d_win;
@@ -29,6 +31,14 @@ private slots :
     void OnFacile();
     void OnNormal();
     void OnPerso();
+    void OnHaut();
+    void OnBas();
+    void OnDroite();
+    void OnGauche();
+    void OnHG();
+    void OnHD();
+    void OnBG();
+    void OnBD();
 };
 
 #endif // FENETRE_H
