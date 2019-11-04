@@ -1,33 +1,35 @@
 #ifndef JOUEUR_H
-#define JOUEUR
-#include<iostream>
+#define JOUEUR_H
+#include <iostream>
+
 #include"position.h"
 
-namespace participant{
+
 
 class joueur{
-    joueur(std::string&nom,position*posi,int score,int dureeVie);
-    participant::position* positionJoueur()const;
+
+public:
+    joueur();
+    joueur(std::string&nom,position pos,int score,int dureeVie);
+    position positionJoueur();
     int score()const;
-    void deplacerJoueur(const position&casee);
+    void deplacerJoueur(int numcol, int numligne);
+    void sauverJoueur(std::ostream&ost);
 
 private:
     std::string d_nom;
-    position*d_case;//la case ou se trouve le joueur
+    position d_case;//la case ou se trouve le joueur
     int d_score;
     int d_dureeVie;
-
-
-
-
-
-
-
-
-
+    int d_nbrobotdetruit;
 
 };
-}
+
+std::ostream& operator<<(std::ostream&ost, joueur& j);
+//std::istream& operator>>(std::istream&ist, joueur& j);
+
+
+#endif // JOUEUR_H
 
 
 
